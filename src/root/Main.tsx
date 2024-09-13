@@ -1,25 +1,25 @@
 import { Router } from '~/router/Router';
-import { setupFirebase } from '~/lib/firebase';
+// import { setupFirebase } from '~/lib/firebase';
 import { useEffect } from 'react';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { useSignIn, useSignOut } from '~/context/UserContext';
+// import { getAuth, onAuthStateChanged } from 'firebase/auth';
+// import { useSignIn, useSignOut } from '~/context/UserContext';
 
 function Main() {
-  const { signIn } = useSignIn();
-  const { signOut } = useSignOut();
+  // const { signIn } = useSignIn();
+  // const { signOut } = useSignOut();
+
   useEffect(() => {
-    setupFirebase();
-
-    const auth = getAuth();
-
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        signIn(user);
-      } else {
-        signOut();
-      }
-    });
+    // setupFirebase();
+    // const auth = getAuth();
+    // onAuthStateChanged(auth, (user) => {
+    //   if (user) {
+    //     signIn(user);
+    //   } else {
+    //     signOut();
+    //   }
+    // });
   }, []);
+
   return (
     <main>
       <Router />

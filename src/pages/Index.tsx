@@ -1,19 +1,19 @@
 import { Dialog } from '@headlessui/react';
 import { useRef, useState } from 'react';
-import { useAuthState } from '~/context/UserContext';
-import { SignInButton } from '~/components/auth/SignInButton';
-import { SignOutButton } from '~/components/auth/SignOutButton';
-import { Head } from '~/components/shared/Head';
+// import { useAuthState } from '~/context/UserContext';
+// import { SignInButton } from '~/components/auth/SignInButton';
+// import { SignOutButton } from '~/components/auth/SignOutButton';
+import { Head } from '~/components/Head';
 
 function Index() {
-  const { state } = useAuthState();
+  // const { state } = useAuthState();
   const [isOpen, setIsOpen] = useState(true);
   const completeButtonRef = useRef(null);
 
   return (
     <>
-      <Head title="TOP PAGE" />
-      <div className="hero min-h-screen">
+      <Head />
+      {/* <div className="hero min-h-screen">
         <div className="text-center hero-content">
           <div>
             <h1 className="text-3xl font-bold">
@@ -69,8 +69,8 @@ function Index() {
             </div>
           </div>
         </div>
-      </div>
-      <Dialog
+      </div> */}
+      {/* <Dialog
         className="flex fixed inset-0 z-10 overflow-y-auto"
         initialFocus={completeButtonRef}
         open={isOpen}
@@ -91,7 +91,7 @@ function Index() {
             </button>
           </div>
         </div>
-      </Dialog>
+      </Dialog> */}
     </>
   );
 }

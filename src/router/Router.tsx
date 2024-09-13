@@ -1,36 +1,17 @@
-import { Dialog } from '@headlessui/react';
-import { lazy, Suspense, useState } from 'react';
-import { Outlet, RouteObject, useRoutes, BrowserRouter } from 'react-router-dom';
-
-const Loading = () => <p className="p-4 w-full h-full text-center">Loading...</p>;
+import { lazy, Suspense } from 'react';
+import { BrowserRouter, RouteObject, useRoutes } from 'react-router-dom';
+import DashboardLayout from '~/layouts/Dashboard';
+import HomeLayout from '~/layouts/HomeLayout';
+import Loading from '~/pages/Loading';
 
 const IndexScreen = lazy(() => import('~/pages/Index'));
 const Page404Screen = lazy(() => import('~/pages/404'));
-
-function Layout() {
-  return (
-    <div>
-      <nav className="p-4 flex items-center justify-between">
-        <span>Header</span>
-      </nav>
-      <Outlet />
-    </div>
-  );
-}
-
-export const Router = () => {
-  return (
-    <BrowserRouter>
-      <InnerRouter />
-    </BrowserRouter>
-  );
-};
 
 const InnerRouter = () => {
   const routes: RouteObject[] = [
     {
       path: '/',
-      element: <Layout />,
+      element: <HomeLayout />,
       children: [
         {
           index: true,
@@ -42,11 +23,31 @@ const InnerRouter = () => {
         },
       ],
     },
+    {
+      path: '/user/:userId',
+      element: <DashboardLayout />,
+      children: [
+        {
+          index: true,
+          element: <IndexScreen />,
+        },
+      ],
+    },
   ];
+
   const element = useRoutes(routes);
+
   return (
     <div>
       <Suspense fallback={<Loading />}>{element}</Suspense>
     </div>
+  );
+};
+
+export const Router = () => {
+  return (
+    <BrowserRouter>
+      <InnerRouter />
+    </BrowserRouter>
   );
 };
