@@ -5,9 +5,9 @@ import Main from '~/root/Main';
 export const App = () => {
   return (
     <HelmetProvider>
-      {/* <AuthProvider> */}
-      <Main />
-      {/* </AuthProvider> */}
+      <AuthProvider>
+        <Main />
+      </AuthProvider>
     </HelmetProvider>
   );
 };

@@ -1,39 +1,29 @@
-import { lazy, Suspense } from 'react';
-import { BrowserRouter, RouteObject, useRoutes } from 'react-router-dom';
-import DashboardLayout from '~/layouts/Dashboard';
+import { onAuthStateChanged } from 'firebase/auth';
+import { Suspense, useEffect } from 'react';
+import { BrowserRouter, useNavigate, useRoutes } from 'react-router-dom';
+import { useSignIn, useSignOut } from '~/context/UserContext';
+import { useAuth } from '~/lib/firebase';
 import Loading from '~/pages/shared/Loading';
-
-const Landing = lazy(() => import('~/pages/Landing'));
-const Page404Screen = lazy(() => import('~/pages/shared/404'));
+import routes from './Routes';
 
 const InnerRouter = () => {
-  const routes: RouteObject[] = [
-    {
-      path: '/',
-      children: [
-        {
-          index: true,
-          element: <Landing />,
-        },
-        {
-          path: '*',
-          element: <Page404Screen />,
-        },
-      ],
-    },
-    {
-      path: '/u/:userId',
-      element: <DashboardLayout />,
-      children: [
-        {
-          index: true,
-          element: <Landing />,
-        },
-      ],
-    },
-  ];
-
+  const { signIn } = useSignIn();
+  const { signOut } = useSignOut();
+  const navigate = useNavigate();
   const element = useRoutes(routes);
+
+  useEffect(() => {
+    const auth = useAuth();
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        signIn(user);
+        navigate(`/u/${user.uid}`);
+      } else {
+        signOut();
+      }
+    });
+  }, []);
 
   return (
     <div>

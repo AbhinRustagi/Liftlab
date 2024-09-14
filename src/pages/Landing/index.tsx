@@ -1,12 +1,12 @@
 import { useRef, useState } from 'react';
 import Container from '~/components/Container';
 import { Link } from 'react-router-dom';
-// import { useAuthState } from '~/context/UserContext';
-// import { SignInButton } from '~/components/auth/SignInButton';
-// import { SignOutButton } from '~/components/auth/SignOutButton';
+import { useAuthState } from '~/context/UserContext';
+import { SignInButton } from '~/components/auth/SignInButton';
+import { SignOutButton } from '~/components/auth/SignOutButton';
 import { Head } from '~/components/Head';
 
-function SignInButton() {
+function SignOnButton() {
   return (
     <button type="button" className="btn btn-active btn-neutral btn-wide">
       <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" viewBox="0 0 50 50" width="20px" height="20px">
@@ -34,7 +34,7 @@ function Footer() {
 }
 
 export default function Landing() {
-  // const { state } = useAuthState();
+  const { state } = useAuthState();
   const [isOpen, setIsOpen] = useState(true);
   const completeButtonRef = useRef(null);
 
@@ -50,7 +50,7 @@ export default function Landing() {
             </Link>
           </div>
           <h1 className="text-5xl font-bold text-base-content mt-12 mb-8">Track progress – one rep a time</h1>
-          <SignInButton />
+          {state.state === 'SIGNED_IN' && state.currentUser ? <SignOutButton /> : <SignInButton />}
         </div>
       </Container>
       <Footer />

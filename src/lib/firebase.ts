@@ -4,14 +4,13 @@ import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore';
 import { connectStorageEmulator, getStorage } from 'firebase/storage';
 
 let firebaseApp: FirebaseApp;
-const useEmulator = () => import.meta.env.VITE_USE_FIREBASE_EMULATOR;
+const useEmulator = () => import.meta.env.VITE_USE_FIREBASE_EMULATOR === 'true';
 
 export const setupFirebase = () => {
   try {
     firebaseApp = initializeApp({
       apiKey: import.meta.env.VITE_FIREBASE_APIKEY,
       authDomain: import.meta.env.VITE_FIREBASE_AUTHDOMAIN,
-      databaseURL: import.meta.env.VITE_FIREBASE_DATABASEURL,
       projectId: import.meta.env.VITE_FIREBASE_PROJECTID,
       storageBucket: import.meta.env.VITE_FIREBASE_STORAGEBUCKET,
       messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGINGSENDERID,
@@ -32,6 +31,7 @@ export const useAuth = () => {
   if (useEmulator()) {
     connectAuthEmulator(auth, 'http://localhost:9099');
   }
+
   return auth;
 };
 
